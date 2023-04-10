@@ -23,8 +23,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Autoclick - L
         case Z_mcLCL:
             if (record->event.pressed) {
-                tap_code(KC_BTN1);
-                tap_code(KC_BTN1);
+                tap_code_delay(KC_BTN1,8);
                 mc_leftClick = true;
                 mc_leftClick_timer = timer_read();
             } else {
@@ -35,7 +34,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Spam space
         case Z_mcSPC:
         if (record->event.pressed) {
-            tap_code(KC_SPC);
+            tap_code_delay(KC_SPC,8);
             mc_space = true;
             mc_space_timer = timer_read();
         } else {
@@ -51,14 +50,14 @@ void matrix_scan_user(void) {
     if (mc_leftClick == true) {
         // if auto clicker timer has elapsed the interval timer
         if (timer_elapsed(mc_leftClick_timer) >= mc_leftClick_interval) {
-            tap_code(KC_BTN1);
+            tap_code_delay(KC_BTN1,8);
             mc_leftClick_timer = timer_read();
         }
     }
     // if spam space is pressed
     if (mc_space == true) {
         if (timer_elapsed(mc_space_timer) >= mc_space_interval) {
-            tap_code(KC_SPC);
+            tap_code_delay(KC_SPC,8);
             mc_space_timer = timer_read();
         }
     }
