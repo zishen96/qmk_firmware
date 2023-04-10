@@ -19,12 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "config_common.h"
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x4F53  //0x4F53 for Qwertykeys
-#define PRODUCT_ID      0x3741  //0x3735 7A for qk75 ANSI
-#define DEVICE_VER      0x0001 
-#define MANUFACTURER    Qwertykeys 
-#define PRODUCT         qk75 ansi
+/* USB Device descriptor parameter 
+ * Deprecated - Refer to info.json
+*/
+// #define VENDOR_ID       0x4F53  //0x4F53 for Qwertykeys
+// #define PRODUCT_ID      0x3741  //0x3735 7A for qk75 ANSI
+// #define DEVICE_VER      0x0001 
+// #define MANUFACTURER    Qwertykeys 
+// #define PRODUCT         qk75 ansi
 
 
 /* key matrix size */
@@ -50,9 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 8
 
 /* NKRO */
 #ifdef NKRO_ENABLE
-#    define FORCE_NKRO
+#define FORCE_NKRO
 #endif
