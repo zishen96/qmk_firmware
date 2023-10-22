@@ -5,8 +5,13 @@
  * Custom keycode definition for use in keymap
  * Z_mcLCL  :   Auto left click
  * Z_mcSPC  :   Auto spacebar spam
+ * Z_mcSHW  :   Auto run forward
  */
-enum { Z_mcLCL = SAFE_RANGE, Z_mcSPC };
+enum { 
+    Z_mcLCL = SAFE_RANGE, 
+    Z_mcSPC, 
+    Z_mcSHW 
+    };
 
 #ifndef AUTO_LEFTCLICK_KEY
 #    define AUTO_LEFTCLICK_KEY KC_BTN1
@@ -16,18 +21,22 @@ enum { Z_mcLCL = SAFE_RANGE, Z_mcSPC };
 #    define AUTO_SPACE_KEY KC_SPC
 #endif
 
+#ifndef AUTO_RUN_KEY
+#    define AUTO_RUN_KEY KC_W
+#endif
+
 /**
  * Custom code init
  */
 void keyboard_post_init_user(void) {
-    srand(timer_read());
+    srand(time(NULL));
 }
 
 /**
  * Configuration for macro repeat interval + random drift range
  */
-static uint16_t MIN_REPEAT_INTERVAL = 96;
-static uint16_t DRIFT_RANGE         = 88;
+static uint16_t MIN_REPEAT_INTERVAL = 110;
+static uint16_t DRIFT_RANGE         = 50;
 
 /**
  * Internal macro processing state
@@ -81,6 +90,10 @@ static void auto_space_stop(void) {
         auto_space_token = INVALID_DEFERRED_TOKEN;
     }
 }
+static void auto_run_start(void) {
+    register_code(KC_LSFT);
+    register_code(AUTO_RUN_KEY);
+}
 
 /**
  * Processing event
@@ -104,6 +117,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 auto_space_stop();
             }
             return false;
+
+        // Auto run
+        case Z_mcSHW:
+            if (record->event.pressed) {
+                auto_run_start();
+            }
     }
     return true;
 }
